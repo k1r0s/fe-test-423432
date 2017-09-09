@@ -1,9 +1,11 @@
-<p><?= this.props.host ?></p>
+<p class="host-title"><?= this.props.host ?></p>
 <ul>
 <? this.props.top5apps.forEach(function(app){ ?>
   <li>
-    <span><?= app.apdex ?></span>
-    <span><?= app.name ?></span>
+    <p>
+      <span><?= app.apdex ?></span>
+      <span><?= app.name ?></span>
+    </p>
   </li>
 <? }); ?>
 </ul>

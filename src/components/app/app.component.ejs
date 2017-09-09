@@ -1,10 +1,22 @@
-<div>
-  <span class="title">Apps by host</span>  <span>for user somebody@test.net</span>
+<?
+this.__isViewAsList = function(){
+  return this.props.viewAs === "list";
+}
+this.__isViewAsGrid = function(){
+  return this.props.viewAs === "grid";
+}
+?>
+
+<div class="header">
+  <span class="title">Apps by host</span>
+  <span class="session-display">for user somebody@adomainveryveryveryverylarge.net</span>
+  <span> <input id="toggle-view" type="checkbox" <?= this.__isViewAsList() && "checked" ?> /> show as list</span>
 </div>
 
-<? this.props.hosts.forEach(function(hostItem){ ?>
-  <div>
-    <?- new Host({ host: hostItem }).root(); ?>
-  </div>
-
-<? }); ?>
+<div class="content <?= this.__isViewAsList() ? 'list-view': 'grid-view' ?>">
+  <? this.props.hosts.forEach(function(hostItem){ ?>
+    <div>
+      <?- new Host({ host: hostItem }).root(); ?>
+    </div>
+  <? }); ?>
+</div>

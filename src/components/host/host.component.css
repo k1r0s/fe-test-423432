@@ -1,8 +1,13 @@
 x-host {
-  margin-top: 30px;
+  margin: 30px;
   background: white;
   display: block;
   padding: 20px;
+  min-width: 375px;
+}
+
+x-host .host-title {
+  font-weight: bold;
 }
 
 x-host ul {

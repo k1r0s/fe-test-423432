@@ -58,6 +58,10 @@ module.exports = Component = Class.inherits(HTMLElement, {
   }, "$registerDomListeners"],
   replaceContent: function(rawhtml) {
     if(this.css) {
+      // var rexReplacer = new RegExp(this.selector, "g");
+      // var preciseCssSelector = this.selector + "#" + this.uid;
+      // sometimes it fails :\
+      // rawhtml += "<style>" + this.css.replace(rexReplacer, preciseCssSelector) + "</style>";
       rawhtml += "<style>" + this.css + "</style>";
     }
 

@@ -8356,6 +8356,10 @@ module.exports = Component = Class.inherits(HTMLElement, {
   }, "$registerDomListeners"],
   replaceContent: function(rawhtml) {
     if(this.css) {
+      // var rexReplacer = new RegExp(this.selector, "g");
+      // var preciseCssSelector = this.selector + "#" + this.uid;
+      // sometimes it fails :\
+      // rawhtml += "<style>" + this.css.replace(rexReplacer, preciseCssSelector) + "</style>";
       rawhtml += "<style>" + this.css + "</style>";
     }
 
@@ -8407,10 +8411,10 @@ module.exports = EventEmitter = Class({
 });
 
 },{"kaop/Class":32}],212:[function(require,module,exports){
-module.exports = "x-app {\n  display: block;\n  background: lightgrey;\n  padding: 20px;\n}\n\nx-app .title {\n  font-size: 24px;\n}\n";
+module.exports = "x-app {\n  display: block;\n  background: lightgrey;\n  padding: 20px;\n  height: 100%;\n}\n\nx-app .title {\n  font-size: 35px;\n}\n\nx-app .content.list-view {\n  display: block;\n}\n\nx-app .content.grid-view {\n  display: flex;\n  flex-wrap: wrap;\n}\n\nx-app .content.grid-view div {\n  flex-grow: 1;\n  width: 40%;\n}\n\nx-app .session-display {\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n";
 
 },{}],213:[function(require,module,exports){
-module.exports = "<div>\n  <span class=\"title\">Apps by host</span>  <span>for user somebody@test.net</span>\n</div>\n\n<? this.props.hosts.forEach(function(hostItem){ ?>\n  <div>\n    <?- new Host({ host: hostItem }).root(); ?>\n  </div>\n\n<? }); ?>\n";
+module.exports = "<?\nthis.__isViewAsList = function(){\n  return this.props.viewAs === \"list\";\n}\nthis.__isViewAsGrid = function(){\n  return this.props.viewAs === \"grid\";\n}\n?>\n\n<div class=\"header\">\n  <span class=\"title\">Apps by host</span>\n  <span class=\"session-display\">for user somebody@adomainveryveryveryverylarge.net</span>\n  <span> <input id=\"toggle-view\" type=\"checkbox\" <?= this.__isViewAsList() && \"checked\" ?> /> show as list</span>\n</div>\n\n<div class=\"content <?= this.__isViewAsList() ? 'list-view': 'grid-view' ?>\">\n  <? this.props.hosts.forEach(function(hostItem){ ?>\n    <div>\n      <?- new Host({ host: hostItem }).root(); ?>\n    </div>\n  <? }); ?>\n</div>\n";
 
 },{}],214:[function(require,module,exports){
 var Class = require("kaop/Class");
@@ -8420,10 +8424,13 @@ module.exports = App = Class.inherits(Component, {
   selector: "x-app",
   template: require('./app.component.ejs'),
   css: require('./app.component.css'),
-  props: { hosts: [] },
+  props: { hosts: [], viewAs: "list" },
   constructor: ["override", function(parent) {
     parent(this.props);
   }],
+  "click #toggle-view": function(e){
+    this.set("viewAs", this.props.viewAs === "list" ? "grid" : "list");
+  },
   afterMount: function(){
     this.setHosts();
   },
@@ -8433,10 +8440,10 @@ module.exports = App = Class.inherits(Component, {
 });
 
 },{"../../common/component":210,"./app.component.css":212,"./app.component.ejs":213,"kaop/Class":32}],215:[function(require,module,exports){
-module.exports = "x-host {\n  margin-top: 30px;\n  background: white;\n  display: block;\n  padding: 20px;\n}\n\nx-host ul {\n  list-style: none;\n  padding: 0;\n}\n\nx-host li * {\n  margin-right: 10px;\n}\n";
+module.exports = "x-host {\n  margin: 30px;\n  background: white;\n  display: block;\n  padding: 20px;\n  min-width: 375px;\n}\n\nx-host .host-title {\n  font-weight: bold;\n}\n\nx-host ul {\n  list-style: none;\n  padding: 0;\n}\n\nx-host li * {\n  margin-right: 10px;\n}\n";
 
 },{}],216:[function(require,module,exports){
-module.exports = "<p><?= this.props.host ?></p>\n<ul>\n<? this.props.top5apps.forEach(function(app){ ?>\n  <li>\n    <span><?= app.apdex ?></span>\n    <span><?= app.name ?></span>\n  </li>\n<? }); ?>\n</ul>\n";
+module.exports = "<p class=\"host-title\"><?= this.props.host ?></p>\n<ul>\n<? this.props.top5apps.forEach(function(app){ ?>\n  <li>\n    <p>\n      <span><?= app.apdex ?></span>\n      <span><?= app.name ?></span>\n    </p>\n  </li>\n<? }); ?>\n</ul>\n";
 
 },{}],217:[function(require,module,exports){
 var Class = require("kaop/Class");

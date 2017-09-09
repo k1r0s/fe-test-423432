@@ -2,8 +2,28 @@ x-app {
   display: block;
   background: lightgrey;
   padding: 20px;
+  height: 100%;
 }
 
 x-app .title {
-  font-size: 24px;
+  font-size: 35px;
+}
+
+x-app .content.list-view {
+  display: block;
+}
+
+x-app .content.grid-view {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+x-app .content.grid-view div {
+  flex-grow: 1;
+  width: 40%;
+}
+
+x-app .session-display {
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

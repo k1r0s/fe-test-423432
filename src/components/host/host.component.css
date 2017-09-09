@@ -1,0 +1,15 @@
+x-host {
+  margin-top: 30px;
+  background: white;
+  display: block;
+  padding: 20px;
+}
+
+x-host ul {
+  list-style: none;
+  padding: 0;
+}
+
+x-host li * {
+  margin-right: 10px;
+}

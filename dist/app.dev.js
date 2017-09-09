@@ -8287,7 +8287,7 @@ Advices.add(
   }
 )
 
-},{"../services/app-repository.service":217,"./compiler":209,"./event-emitter":211,"kaop/Advices":31}],209:[function(require,module,exports){
+},{"../services/app-repository.service":219,"./compiler":209,"./event-emitter":211,"kaop/Advices":31}],209:[function(require,module,exports){
 var EJS = require("ejs");
 EJS.delimiter = "?";
 
@@ -8407,15 +8407,19 @@ module.exports = EventEmitter = Class({
 });
 
 },{"kaop/Class":32}],212:[function(require,module,exports){
-module.exports = "<div class=\"\">\n  <h1>Apps by host</h1>\n  <span>for user somebody@test.net</span>\n</div>\n\n<? this.props.hosts.forEach(function(hostItem){ ?>\n  <div>\n    <?- new Host({ host: hostItem }).root(); ?>\n  </div>\n\n<? }); ?>\n";
+module.exports = "x-app {\n  display: block;\n  background: lightgrey;\n  padding: 20px;\n}\n\nx-app .title {\n  font-size: 24px;\n}\n";
 
 },{}],213:[function(require,module,exports){
+module.exports = "<div>\n  <span class=\"title\">Apps by host</span>  <span>for user somebody@test.net</span>\n</div>\n\n<? this.props.hosts.forEach(function(hostItem){ ?>\n  <div>\n    <?- new Host({ host: hostItem }).root(); ?>\n  </div>\n\n<? }); ?>\n";
+
+},{}],214:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Component = require("../../common/component");
 
 module.exports = App = Class.inherits(Component, {
   selector: "x-app",
   template: require('./app.component.ejs'),
+  css: require('./app.component.css'),
   props: { hosts: [] },
   constructor: ["override", function(parent) {
     parent(this.props);
@@ -8428,10 +8432,13 @@ module.exports = App = Class.inherits(Component, {
   }]
 });
 
-},{"../../common/component":210,"./app.component.ejs":212,"kaop/Class":32}],214:[function(require,module,exports){
+},{"../../common/component":210,"./app.component.css":212,"./app.component.ejs":213,"kaop/Class":32}],215:[function(require,module,exports){
+module.exports = "x-host {\n  margin-top: 30px;\n  background: white;\n  display: block;\n  padding: 20px;\n}\n\nx-host ul {\n  list-style: none;\n  padding: 0;\n}\n\nx-host li * {\n  margin-right: 10px;\n}\n";
+
+},{}],216:[function(require,module,exports){
 module.exports = "<p><?= this.props.host ?></p>\n<ul>\n<? this.props.top5apps.forEach(function(app){ ?>\n  <li>\n    <span><?= app.apdex ?></span>\n    <span><?= app.name ?></span>\n  </li>\n<? }); ?>\n</ul>\n";
 
-},{}],215:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Component = require("../../common/component");
 var _slice = require("lodash/slice");
@@ -8439,6 +8446,7 @@ var _slice = require("lodash/slice");
 module.exports = Host = Class.inherits(Component, {
   selector: "x-host",
   template: require('./host.component.ejs'),
+  css: require('./host.component.css'),
   props: { host: "", top5apps: [] },
   constructor: ["override", function(parent, props) {
     parent(props);
@@ -8455,7 +8463,7 @@ module.exports = Host = Class.inherits(Component, {
   }]
 });
 
-},{"../../common/component":210,"./host.component.ejs":214,"kaop/Class":32,"lodash/slice":193}],216:[function(require,module,exports){
+},{"../../common/component":210,"./host.component.css":215,"./host.component.ejs":216,"kaop/Class":32,"lodash/slice":193}],218:[function(require,module,exports){
 require("./common/advices");
 
 var App = require("./components/app/app.component");
@@ -8463,7 +8471,7 @@ var Host = require("./components/host/host.component");
 
 document.body.querySelector("#app").innerHTML = new App().root();
 
-},{"./common/advices":208,"./components/app/app.component":213,"./components/host/host.component":215}],217:[function(require,module,exports){
+},{"./common/advices":208,"./components/app/app.component":214,"./components/host/host.component":217}],219:[function(require,module,exports){
 var axios = require("axios");
 var _flatMapDeep = require("lodash/flatMapDeep");
 var _union = require("lodash/union");
@@ -8504,4 +8512,4 @@ module.exports = {
   }
 }
 
-},{"axios":1,"lodash/filter":167,"lodash/find":168,"lodash/flatMapDeep":170,"lodash/includes":174,"lodash/map":188,"lodash/reverse":192,"lodash/slice":193,"lodash/sortBy":194,"lodash/union":201}]},{},[216]);
+},{"axios":1,"lodash/filter":167,"lodash/find":168,"lodash/flatMapDeep":170,"lodash/includes":174,"lodash/map":188,"lodash/reverse":192,"lodash/slice":193,"lodash/sortBy":194,"lodash/union":201}]},{},[218]);

@@ -1,0 +1,9 @@
+x-app {
+  display: block;
+  background: lightgrey;
+  padding: 20px;
+}
+
+x-app .title {
+  font-size: 24px;
+}

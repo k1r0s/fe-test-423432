@@ -5,6 +5,7 @@ var _slice = require("lodash/slice");
 module.exports = Host = Class.inherits(Component, {
   selector: "x-host",
   template: require('./host.component.ejs'),
+  css: require('./host.component.css'),
   props: { host: "", top5apps: [] },
   constructor: ["override", function(parent, props) {
     parent(props);

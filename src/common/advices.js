@@ -1,9 +1,11 @@
 var Advices = require("kaop/Advices");
 var EventEmitter = require("./event-emitter");
 var compiler = require("./compiler");
+var appRepo = require("../services/app-repository.service");
 
 Advices.locals.$ejsCompiler = compiler;
 Advices.locals.$EE = new EventEmitter();
+Advices.locals.$appRepo = appRepo;
 
 Advices.add(
   function $emit(evid) {
@@ -25,6 +27,12 @@ Advices.add(
     }
 
     meta.args.push(meta.scope.__compileFn(null));
+  },
+  function $getHostNames(){
+    $appRepo.getHostNames(function(names){
+      meta.args.push(names);
+      next();
+    });
   },
   function $valueof(selector) {
     meta.args.unshift(meta.scope.q(selector).value);

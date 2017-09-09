@@ -4,5 +4,8 @@
 </div>
 
 <? this.props.hosts.forEach(function(hostItem){ ?>
-  <?- new Host({ host: hostItem }).root(); ?>
+  <div>
+    <?- new Host({ host: hostItem }).root(); ?>
+  </div>
+
 <? }); ?>

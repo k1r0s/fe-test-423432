@@ -9,6 +9,9 @@ module.exports = App = Class.inherits(Component, {
     parent(this.props);
   }],
   afterMount: function(){
-    this.set("hosts", [1, 2, 3]);
-  }
+    this.setHosts();
+  },
+  setHosts: ["$getHostNames", function(names){
+    this.set("hosts", names);
+  }]
 });

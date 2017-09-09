@@ -34,6 +34,6 @@ module.exports = {
   },
   getTopAppsByHost: function(requestedHostName){
     var host = _find(this.parsed, function(app){ return app.name === requestedHostName })
-    return _slice(_sortBy(host.apps, "apdex", ['desc']), 0, 25);
+    return _slice(_reverse(_sortBy(host.apps, "apdex")), 0, 25);
   }
 }

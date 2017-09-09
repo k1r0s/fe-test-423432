@@ -1,1 +1,9 @@
-<p><?= this.props.host ?> host component here</p>
+<p><?= this.props.host ?></p>
+<ul>
+<? this.props.top5apps.forEach(function(app){ ?>
+  <li>
+    <span><?= app.apdex ?></span>
+    <span><?= app.name ?></span>
+  </li>
+<? }); ?>
+</ul>

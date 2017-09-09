@@ -34,6 +34,10 @@ Advices.add(
       next();
     });
   },
+  function $getTopAppsByHost(){
+    var requestedHostName = meta.args[0];
+    meta.args.push($appRepo.getTopAppsByHost(requestedHostName));
+  },
   function $valueof(selector) {
     meta.args.unshift(meta.scope.q(selector).value);
   },

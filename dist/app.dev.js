@@ -8271,6 +8271,10 @@ Advices.add(
       next();
     });
   },
+  function $getTopAppsByHost(){
+    var requestedHostName = meta.args[0];
+    meta.args.push($appRepo.getTopAppsByHost(requestedHostName));
+  },
   function $valueof(selector) {
     meta.args.unshift(meta.scope.q(selector).value);
   },
@@ -8425,25 +8429,33 @@ module.exports = App = Class.inherits(Component, {
 });
 
 },{"../../common/component":210,"./app.component.ejs":212,"kaop/Class":32}],214:[function(require,module,exports){
-module.exports = "<p><?= this.props.host ?> host component here</p>\n";
+module.exports = "<p><?= this.props.host ?></p>\n<ul>\n<? this.props.top5apps.forEach(function(app){ ?>\n  <li>\n    <span><?= app.apdex ?></span>\n    <span><?= app.name ?></span>\n  </li>\n<? }); ?>\n</ul>\n";
 
 },{}],215:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Component = require("../../common/component");
+var _slice = require("lodash/slice");
 
 module.exports = Host = Class.inherits(Component, {
   selector: "x-host",
   template: require('./host.component.ejs'),
-  props: { host: {} },
+  props: { host: "", top5apps: [] },
   constructor: ["override", function(parent, props) {
     parent(props);
   }],
+  isRenderAllowed: function(){
+    return this.props.host && this.props.top5apps instanceof Array;
+  },
   afterMount: function(){
     this.set("host", this.props.host);
-  }
+    this.getApps(this.props.host);
+  },
+  getApps: ["$getTopAppsByHost", function(hostName, top25apps){
+    this.set("top5apps", _slice(top25apps, 0, 5));
+  }]
 });
 
-},{"../../common/component":210,"./host.component.ejs":214,"kaop/Class":32}],216:[function(require,module,exports){
+},{"../../common/component":210,"./host.component.ejs":214,"kaop/Class":32,"lodash/slice":193}],216:[function(require,module,exports){
 require("./common/advices");
 
 var App = require("./components/app/app.component");
@@ -8488,7 +8500,7 @@ module.exports = {
   },
   getTopAppsByHost: function(requestedHostName){
     var host = _find(this.parsed, function(app){ return app.name === requestedHostName })
-    return _slice(_sortBy(host.apps, "apdex", ['desc']), 0, 25);
+    return _slice(_reverse(_sortBy(host.apps, "apdex")), 0, 25);
   }
 }
 

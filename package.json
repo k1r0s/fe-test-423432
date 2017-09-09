@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:dev": "webpack src/index.js dist/bundle.js",
+    "build:dev": "browserify -t [ stringify --extensions [.ejs .css] ] ./src/init.js -o ./dist/app.dev.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,9 +12,13 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.16.2",
-    "lodash": "^4.17.4"
+    "ejs": "^2.5.7",
+    "kaop": "^2.7.10",
+    "lodash": "^4.17.4",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
-    "webpack": "^3.5.6"
+    "browserify": "^14.4.0",
+    "stringify": "^5.1.0"
   }
 }

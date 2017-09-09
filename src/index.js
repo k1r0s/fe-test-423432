@@ -7,6 +7,7 @@ import filter from "lodash/filter";
 import includes from "lodash/includes";
 import sortBy from "lodash/sortBy";
 import reverse from "lodash/reverse";
+import { Host } from '../dist/types/model/host.model.d';
 
 axios.get("data/host-app-data.json").then(({ data }) => {
 
@@ -16,7 +17,7 @@ axios.get("data/host-app-data.json").then(({ data }) => {
   const hostTree = map(union(flatMapDeep(data, (item => item.host))), (host, index) => {
     return {
       host,
-      top5: slice(reverse(sortBy(filter(data, (item) => includes(item.host, host)), 'apdex')), 0, 5)
+      top15: slice(reverse(sortBy(filter(data, (item) => includes(item.host, host)), 'apdex')), 0, 5)
     }
   })
 

@@ -1,0 +1,8 @@
+<div class="">
+  <h1>Apps by host</h1>
+  <span>for user somebody@test.net</span>
+</div>
+
+<? this.props.hosts.forEach(function(hostItem){ ?>
+  <?- new Host({ host: hostItem }).root(); ?>
+<? }); ?>

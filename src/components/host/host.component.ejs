@@ -1,8 +1,8 @@
 <p class="host-title"><?= this.props.host ?></p>
 <ul>
-<? this.props.top5apps.forEach(function(app){ ?>
+<? this.props.top5apps.forEach(function(app, i){ ?>
   <li>
-    <p>
+    <p id="app-container" index="<?= i ?>">
       <span><?= app.apdex ?></span>
       <span><?= app.name ?></span>
     </p>

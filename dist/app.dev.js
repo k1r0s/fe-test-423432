@@ -8271,6 +8271,10 @@ Advices.add(
       next();
     });
   },
+  function $getAttributteFromTarget(attrName){
+    var event = meta.args[0];
+    meta.args.push(event.currentTarget.getAttribute(attrName));
+  },
   function $getTopAppsByHost(){
     var requestedHostName = meta.args[0];
     meta.args.push($appRepo.getTopAppsByHost(requestedHostName));
@@ -8443,7 +8447,7 @@ module.exports = App = Class.inherits(Component, {
 module.exports = "x-host {\n  margin: 30px;\n  background: white;\n  display: block;\n  padding: 20px;\n  min-width: 375px;\n}\n\nx-host .host-title {\n  font-weight: bold;\n}\n\nx-host ul {\n  list-style: none;\n  padding: 0;\n}\n\nx-host li * {\n  margin-right: 10px;\n}\n";
 
 },{}],216:[function(require,module,exports){
-module.exports = "<p class=\"host-title\"><?= this.props.host ?></p>\n<ul>\n<? this.props.top5apps.forEach(function(app){ ?>\n  <li>\n    <p>\n      <span><?= app.apdex ?></span>\n      <span><?= app.name ?></span>\n    </p>\n  </li>\n<? }); ?>\n</ul>\n";
+module.exports = "<p class=\"host-title\"><?= this.props.host ?></p>\n<ul>\n<? this.props.top5apps.forEach(function(app, i){ ?>\n  <li>\n    <p id=\"app-container\" index=\"<?= i ?>\">\n      <span><?= app.apdex ?></span>\n      <span><?= app.name ?></span>\n    </p>\n  </li>\n<? }); ?>\n</ul>\n";
 
 },{}],217:[function(require,module,exports){
 var Class = require("kaop/Class");
@@ -8461,6 +8465,10 @@ module.exports = Host = Class.inherits(Component, {
   isRenderAllowed: function(){
     return this.props.host && this.props.top5apps instanceof Array;
   },
+  "click #app-container": ["$getAttributteFromTarget: 'index'", function(e, value){
+    var requestedApp = this.props.top5apps[parseInt(value)];
+    alert(requestedApp.name + "'s version: " + requestedApp.version);
+  }],
   afterMount: function(){
     this.set("host", this.props.host);
     this.getApps(this.props.host);

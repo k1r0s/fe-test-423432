@@ -34,6 +34,10 @@ Advices.add(
       next();
     });
   },
+  function $getAttributteFromTarget(attrName){
+    var event = meta.args[0];
+    meta.args.push(event.currentTarget.getAttribute(attrName));
+  },
   function $getTopAppsByHost(){
     var requestedHostName = meta.args[0];
     meta.args.push($appRepo.getTopAppsByHost(requestedHostName));

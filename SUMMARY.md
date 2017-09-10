@@ -13,6 +13,10 @@ _Specify Big-O notation of your algorithm. You should strive for an optimal solu
 
 **First of all, I have no computer degree, so my knowledge on this topic is not as good as I wish... Ofc I know that nested array iterations will pain my performance. I used lodash because it was easy (not optimal, yeah) to speed up development. I'll try to find a better solution and provide a git patch tomorrow.**
 
+UPDATE: src/index.js contains a self implementation with a little research. I don't think if this is the best scenario. IMO Worst performance  `O(n * N)` comes because of provided data structure.
+
+run it with `$ node src/index`
+
 Things I'll do on a real project. (most of the decisions below are to speed up development)
 
 - Use virtualdom instead of EJS.
